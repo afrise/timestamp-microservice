@@ -29,10 +29,13 @@ app.get("/api/timestamp", function(req, res) {
 });
 
 app.get("/api/timestamp/:date_string", function(req, res) {
-    console.log(req.params["date_string"])
     var date = new Date(req.params["date_string"])
     if (date.toUTCString() == "Invalid Date")
       date = new Date(parseInt(req.params["date_string"]))
+  
+  if (date.toUTCString() == "Invalid Date")
+    res.json({error: "Invalid Date"})
+  else
     res.json({ unix: date.getTime(), utc: date.toUTCString() });
   
 });
